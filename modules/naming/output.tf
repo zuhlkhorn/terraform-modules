@@ -1,3 +1,3 @@
-output "result" {
+output "placeholders" {
   value = local.names
 }
