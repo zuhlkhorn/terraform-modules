@@ -1,4 +1,4 @@
-variable "default_name_length" {
+variable "name_random_part_length" {
   default = 0
 }
 
