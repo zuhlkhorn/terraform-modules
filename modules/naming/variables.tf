@@ -3,7 +3,7 @@ variable "name_random_part_length" {
 }
 
 variable "namespace" {
-  type        = string
+  type = string
   validation {
     condition     = length(var.namespace) > 0
     error_message = "You must specify a namespace."
@@ -20,7 +20,7 @@ variable "environment" {
 }
 
 variable "prefix" {
-  type        = string
+  type = string
   validation {
     condition     = length(var.prefix) > 0
     error_message = "You must specify a prefix."
