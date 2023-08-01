@@ -8,7 +8,7 @@ Rule #2: **Only place it here when you need to use it in more than one Terraform
 
 ## naming module
 
-The naming module is a generic module that can be used to create consistent naming convention for resources based on our adopted convention: https://github.com/zuhlkhorn/documentation/blob/main/guidelines/azure_naming.md
+The naming module is a generic module that can be used to create consistent naming convention for resources based on the adopted convention.
 
 `main.tf`
 ```hcl
@@ -16,7 +16,7 @@ module "naming" {
   source = "git::https://github.com/zuhlkhorn/terraform-modules.git//modules/naming"
   prefix = var.prefix           # mandatory: prefix for all resources
   environment = var.environment # mandatory: environment (dev, test, prod)
-  namespace = var.namespace     # mandatory: namespace (application name, e.g. across)
+  namespace = var.namespace     # mandatory: namespace (application name)
   name_random_part_length = 0   # optional: length of random part of name (default: 0)
 }
 ```
