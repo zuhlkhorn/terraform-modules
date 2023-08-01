@@ -1,5 +1,7 @@
 # terraform-modules
 
+⚠️ **This repository is public. Do NOT store any client specific data.** ⚠️
+
 This is a collection of various generic re-usable Terraform modules. Only put **generic** modules here, that are not specific to a certain Subscription and that might be re-used in multiple subscriptions.
 
 Rule #1: **If you don't need it in two Terraform Repositories, do NOT place it here!**
