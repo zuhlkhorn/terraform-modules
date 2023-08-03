@@ -7,7 +7,13 @@ resource "azurecaf_name" "default" {
 resource "azurecaf_name" "short" {
   name           = "shortname"
   random_length  = 0
-  resource_types = ["azurerm_key_vault", "azurerm_storage_account"]
+  resource_types = ["azurerm_key_vault"]
+}
+
+resource "azurecaf_name" "short-alphanumeric" {
+  name           = "alphanumeric"
+  random_length  = 0
+  resource_types = ["azurerm_storage_account"]
 }
 
 locals {
@@ -24,6 +30,7 @@ locals {
 locals {
   names = merge(
     { for key, value in local.temp_names : key => "${var.prefix}-${replace(value, "basename", "%s-${var.namespace}-${var.environment}-szn")}" },
-    { for key, value in azurecaf_name.short.results : key => "${var.prefix}-${replace(value, "shortname", "%s-${var.namespace}-${var.environment}")}" }
+    { for key, value in azurecaf_name.short.results : key => "${var.prefix}-${replace(value, "shortname", "%s-${var.namespace}-${var.environment}")}" },
+    { for key, value in azurecaf_name.short-alphanumeric.results : key => "${var.prefix}${replace(value, "alphanumeric", "%s${var.namespace}${var.environment}")}" }
   )
 }
