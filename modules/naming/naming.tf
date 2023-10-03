@@ -1,5 +1,19 @@
+locals {
+  exclude_from_default = [
+    "azurerm_log_analytics_solution",
+    "azurerm_monitor_data_collection_rule",
+    "azurerm_monitor_data_collection_rule_association",
+    "azurerm_monitor_data_collection_endpoint",
+    "azurerm_management_lock"
+  ]
+}
+
 resource "azurecaf_name" "default" {
-  for_each = toset(var.resources)
+  for_each = {
+    for k, v in toset(var.resources) : k => v
+    if ! contains(local.exclude_from_default, k)
+  }
+
 
   name           = "basename"
   random_length  = var.name_random_part_length
@@ -25,11 +39,11 @@ resource "azurecaf_name" "short-alphanumeric" {
 locals {
   temp_names = merge(
     { for key, value in azurecaf_name.default : key => value.result },
-    { "azurerm_log_analytics_solution" = "las-basename" },
-    { "azurerm_monitor_data_collection_rule" = "dcr-basename" },
-    { "azurerm_monitor_data_collection_rule_association" = "dcra-basename" },
-    { "azurerm_monitor_data_collection_endpoint" = "dcre-basename" },
-    { "azurerm_management_lock" = "lock-basename" }
+    contains(var.resources, "azurerm_log_analytics_solution") ? { "azurerm_log_analytics_solution" = "las-basename" } : {},
+    contains(var.resources, "azurerm_monitor_data_collection_rule") ? { "azurerm_monitor_data_collection_rule" = "dcr-basename" } : {},
+    contains(var.resources, "azurerm_monitor_data_collection_rule_association") ? { "azurerm_monitor_data_collection_rule_association" = "dcra-basename" } : {},
+    contains(var.resources, "azurerm_monitor_data_collection_endpoint") ? { "azurerm_monitor_data_collection_endpoint" = "dcre-basename" } : {},
+    contains(var.resources, "azurerm_management_lock") ? { "azurerm_management_lock" = "lock-basename" } : {},
   )
   temp_short_names = { for key, value in azurecaf_name.short : key => value.result }
   temp_short_alphanumeric = { for key, value in azurecaf_name.short-alphanumeric : key => value.result }
