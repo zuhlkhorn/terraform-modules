@@ -14,7 +14,6 @@ resource "azurecaf_name" "default" {
     if ! contains(local.exclude_from_default, k)
   }
 
-
   name           = "basename"
   random_length  = var.name_random_part_length
   resource_type = each.key
