@@ -4,7 +4,8 @@ locals {
     "azurerm_monitor_data_collection_rule",
     "azurerm_monitor_data_collection_rule_association",
     "azurerm_monitor_data_collection_endpoint",
-    "azurerm_management_lock"
+    "azurerm_management_lock",
+    "azurerm_monitor_metric_alert"
   ]
 }
 
@@ -39,10 +40,12 @@ locals {
   temp_names = merge(
     { for key, value in azurecaf_name.default : key => value.result },
     contains(var.resources, "azurerm_log_analytics_solution") ? { "azurerm_log_analytics_solution" = "las-basename" } : {},
+    contains(var.resources, "azurerm_monitor_metric_alert") ? { "azurerm_monitor_metric_alert" = "mma-basename" } : {},
     contains(var.resources, "azurerm_monitor_data_collection_rule") ? { "azurerm_monitor_data_collection_rule" = "dcr-basename" } : {},
     contains(var.resources, "azurerm_monitor_data_collection_rule_association") ? { "azurerm_monitor_data_collection_rule_association" = "dcra-basename" } : {},
     contains(var.resources, "azurerm_monitor_data_collection_endpoint") ? { "azurerm_monitor_data_collection_endpoint" = "dcre-basename" } : {},
     contains(var.resources, "azurerm_management_lock") ? { "azurerm_management_lock" = "lock-basename" } : {},
+    
   )
   temp_short_names = { for key, value in azurecaf_name.short : key => value.result }
   temp_short_alphanumeric = { for key, value in azurecaf_name.short-alphanumeric : key => value.result }
