@@ -46,7 +46,7 @@ locals {
     contains(var.resources, "azurerm_monitor_data_collection_rule_association") ? { "azurerm_monitor_data_collection_rule_association" = "dcra-basename" } : {},
     contains(var.resources, "azurerm_monitor_data_collection_endpoint") ? { "azurerm_monitor_data_collection_endpoint" = "dcre-basename" } : {},
     contains(var.resources, "azurerm_management_lock") ? { "azurerm_management_lock" = "lock-basename" } : {},
-    contains(var.resources, "azurerm_mssql_managed_instance") ? { "azurerm_management_lock" = "sqlmi-basename" } : {},
+    contains(var.resources, "azurerm_mssql_managed_instance") ? { "azurerm_mssql_managed_instance" = "sqlmi-basename" } : {},
     
   )
   temp_short_names = { for key, value in azurecaf_name.short : key => value.result }
